@@ -18,7 +18,7 @@ export default class PostgresStrategy {
   }
 
   async create(item) {
-    return this.#instance.insert({name: item.name}).into(this.table);
+    return this.#instance.insert(item).into(this.table);
   }
 
   async read(item) {
