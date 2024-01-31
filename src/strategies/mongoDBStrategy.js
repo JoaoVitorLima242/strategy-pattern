@@ -1,11 +1,31 @@
+import mongodb from "mongodb";
 export default class MongoDBStrategy {
-  constructor(dbStrategy) {
-    this.dbStrategy = dbStrategy;
+  #instance;
+
+  constructor(connectionString) {
+    const { pathname: dbName } = new URL(connectionString);
+    this.connectionString = connectionString.replace(dbName, "");
+    this.db = dbName.replace(/\W/, "");
+
+    this.collection = "warriors";
   }
 
-  connect() {}
+  async connect() {
+    const client = new mongodb.MongoClient(this.connectionString, {
+      useUnifiedTopology: true,
+    });
 
-  create(item) {}
+    await client.connect();
+    const db = client.db(this.db).collection(this.collection);
 
-  read(item) {}
+    this.#instance = db;
+  }
+
+  async create(item) {
+    return this.#instance.insertOne(item);
+  }
+
+  async read(item) {
+    return this.#instance.find(item).toArray();
+  }
 }
