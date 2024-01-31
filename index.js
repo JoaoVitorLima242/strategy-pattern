@@ -4,13 +4,11 @@ import PostgresStrategy from "./src/strategies/postgresStrategy.js";
 const postgresConnectionsString =
   "postgres://joaovitor:senha123@localhost:5432/heroes";
 
-const postgresStrategy = new ContextStrategy(
+const postgresContext = new ContextStrategy(
   new PostgresStrategy(postgresConnectionsString)
 );
 
-const result = await postgresStrategy.connect();
-
-console.log({ result });
+await postgresContext.connect();
 
 const data = [
   {
@@ -22,3 +20,7 @@ const data = [
     type: "activityLog",
   },
 ];
+
+// await postgresContext.create(data[0]);
+const select = await postgresContext.read();
+console.log({ select });

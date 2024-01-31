@@ -17,7 +17,11 @@ export default class PostgresStrategy {
     return this.#instance.raw("select 1+1 as result");
   }
 
-  async create(item) {}
+  async create(item) {
+    return this.#instance.insert({name: item.name}).into(this.table);
+  }
 
-  async read(item) {}
+  async read(item) {
+    return this.#instance.select().from(this.table);
+  }
 }
