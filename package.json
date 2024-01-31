@@ -12,5 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "knex": "^3.1.0",
+    "pg": "^8.11.3"
   }
 }

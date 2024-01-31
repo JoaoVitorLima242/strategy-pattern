@@ -1,9 +1,16 @@
 import ContextStrategy from "./src/base/contextStrategy.js";
 import PostgresStrategy from "./src/strategies/postgresStrategy.js";
 
-const postgresStrategy = new ContextStrategy(new PostgresStrategy());
+const postgresConnectionsString =
+  "postgres://joaovitor:senha123@localhost:5432/heroes";
 
-postgresStrategy.connect();
+const postgresStrategy = new ContextStrategy(
+  new PostgresStrategy(postgresConnectionsString)
+);
+
+const result = await postgresStrategy.connect();
+
+console.log({ result });
 
 const data = [
   {
